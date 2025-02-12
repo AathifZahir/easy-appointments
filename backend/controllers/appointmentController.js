@@ -5,7 +5,7 @@ const appointmentController = {
   // Get all appointments
   getAllAppointments: async (req, res) => {
     try {
-      const userId = req.user.id; // Assuming you are using JWT authentication
+      const userId = req.user.id; // Assuming JWT authentication adds the user to the request
       const appointments = await Appointment.findAll({
         where: { user_id: userId },
       });
