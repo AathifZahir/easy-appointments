@@ -1,7 +1,6 @@
 const Slot = require("../models/slot");
 
 const slotController = {
-  // Get all available time slots
   getAvailableSlots: async (req, res) => {
     try {
       const slots = await Slot.getAllAvailable();
@@ -13,7 +12,6 @@ const slotController = {
     }
   },
 
-  // Create a new time slot
   createSlot: async (req, res) => {
     const { slot_time } = req.body;
     try {

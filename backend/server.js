@@ -8,9 +8,13 @@ app.use(express.json());
 // Routes
 const slotRoutes = require("./routes/slotRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const userRoutes = require("./routes/userRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 
 app.use("/api", slotRoutes);
 app.use("/api", appointmentRoutes);
+app.use("/api", userRoutes); // Admin, user routes
+app.use("/api", notificationRoutes); // Notification routes
 
 // Start server
 app.listen(port, () => {

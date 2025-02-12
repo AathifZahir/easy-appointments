@@ -1,6 +1,5 @@
 const db = require("../config/db");
 
-// Slot model
 const Slot = {
   getAllAvailable: () => {
     return new Promise((resolve, reject) => {

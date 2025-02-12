@@ -1,11 +1,10 @@
 const db = require("../config/db");
 
-// Appointment model
 const Appointment = {
-  getAllAppointments: () => {
+  getAllAppointments: (userId) => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM appointments";
-      db.query(query, (err, results) => {
+      const query = "SELECT * FROM appointments WHERE user_id = ?";
+      db.query(query, [userId], (err, results) => {
         if (err) reject(err);
         resolve(results);
       });

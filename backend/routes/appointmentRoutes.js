@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const appointmentController = require("../controllers/appointmentController");
-const authenticateToken = require("../middleware/auth"); // Import the authentication middleware
+const authenticateToken = require("../middleware/auth");
 
-// Protect routes with the authenticateToken middleware
 router.get(
   "/appointments",
   authenticateToken,
