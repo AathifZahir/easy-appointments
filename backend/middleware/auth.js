@@ -1,23 +1,24 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 
 const authenticateToken = (req, res, next) => {
-  const token =
-    req.header("Authorization") && req.header("Authorization").split(" ")[1];
+  const token = req.header("Authorization")?.split(" ")[1];
 
-  if (!token) {
-    return res
-      .status(401)
-      .json({ message: "Access Denied. No Token Provided" });
-  }
+  if (!token) return res.status(401).json({ message: "Access Denied" });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user info to request object
-    next(); // Proceed to next middleware or route handler
+    req.user = decoded;
+    next();
   } catch (err) {
-    return res.status(400).json({ message: "Invalid Token" });
+    res.status(403).json({ message: "Invalid Token" });
   }
 };
 
-module.exports = authenticateToken;
+const authorizeAdmin = (req, res, next) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Admin access required" });
+  }
+  next();
+};
+
+module.exports = { authenticateToken, authorizeAdmin };

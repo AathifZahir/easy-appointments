@@ -1,23 +1,22 @@
 const db = require("../config/db");
 
 const User = {
-  create: (name, email, password, role) => {
+  getUserByEmail: (email) => {
     return new Promise((resolve, reject) => {
-      const query =
-        "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
-      db.query(query, [name, email, password, role], (err, result) => {
+      const query = "SELECT * FROM users WHERE email = ?";
+      db.query(query, [email], (err, results) => {
         if (err) reject(err);
-        resolve(result);
+        resolve(results[0]);
       });
     });
   },
 
-  getById: (userId) => {
+  getUserById: (userId) => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM users WHERE id = ?";
-      db.query(query, [userId], (err, result) => {
+      const query = "SELECT id, name, email, role FROM users WHERE id = ?";
+      db.query(query, [userId], (err, results) => {
         if (err) reject(err);
-        resolve(result);
+        resolve(results[0]);
       });
     });
   },

@@ -1,25 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const appointmentController = require("../controllers/appointmentController");
-const authenticateToken = require("../middleware/auth");
+const { authenticateToken, authorizeAdmin } = require("../middleware/auth");
 
 router.get(
-  "/appointments",
+  "/",
   authenticateToken,
+  authorizeAdmin,
   appointmentController.getAllAppointments
 );
-router.post(
-  "/appointments",
-  authenticateToken,
-  appointmentController.bookAppointment
-);
+router.post("/book", authenticateToken, appointmentController.bookAppointment);
 router.get(
-  "/appointments/:user_contact",
+  "/user/:user_contact",
   authenticateToken,
   appointmentController.getUserAppointments
 );
 router.delete(
-  "/appointments/:appointment_id",
+  "/cancel/:appointment_id",
   authenticateToken,
   appointmentController.cancelAppointment
 );
